@@ -20,13 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private float maxImgH = 10, maxImgW = 20, x = 2, y = 2;
     private Paint p;
 
+    private Bitmap dbm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         img = (TouchImageView) findViewById(R.id.img);
-        VectorDrawable drawable = (VectorDrawable) ContextCompat.getDrawable(this, R.drawable.map);
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.map);
         img.setImageBitmap(drawableToBitmap(drawable));
 
         p = new Paint();
@@ -34,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
         p.setStrokeWidth(1);
         p.setStyle(Paint.Style.FILL_AND_STROKE);
         p.setColor(Color.rgb(254, 0, 1));
+
+        dbm = drawableToBitmap(drawable);
     }
 
 
     public void draw(){
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.map);
-        Bitmap bm = drawableToBitmap(drawable);
+        Bitmap bm = dbm.copy(dbm.getConfig(), true);
         Canvas c = new Canvas(bm);
         int maxH = bm.getHeight();
         int maxW = bm.getWidth();
